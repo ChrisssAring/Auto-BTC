@@ -26,12 +26,6 @@ def run(name):
         private_keys = utils.generate_private_keys_from_file(100)
         addresses = utils.private_key_to_public_address(private_keys)
 
-        file1 = open('password_list.txt', 'r')
-        Lines = file1.readlines()
-        for line in Lines:
-            print("Line{}: {}".format(count, line.strip()))
-
-
         for i, address in enumerate(addresses):
             message = "private:{},address:{}".format(
                 private_keys[i], address)
