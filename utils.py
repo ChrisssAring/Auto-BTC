@@ -4,6 +4,7 @@ import binascii
 import os
 import ecdsa
 import logging
+import codecs
 import horsephrase
 from logging.handlers import RotatingFileHandler
 
@@ -16,7 +17,10 @@ def generate_private_keys_random(number_of_keys):
 def generate_private_keys_from_file(number_of_keys):
     private_keys = []
     for i in range(number_of_keys):
-        private_keys.append(horsephrase._implementation.generate())
+        input_password_bytes = codecs.encode(horsephrase._implementation.generate(), "utf-8")
+        private_key = hashlib.sha256(input_password_bytes).hexdigest()
+        private_key_bytes = codecs.decode(private_key, "hex") #Type bytes
+        private_keys.append(private_key_bytes.hex())
     return private_keys
 
 def ripemd160(hash):
